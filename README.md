@@ -1,4 +1,4 @@
 bluestreak
 ==========
 
-Canvas sidle scroller
+Canvas side scroller
