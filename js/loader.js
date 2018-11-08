@@ -1,7 +1,7 @@
 /*
 loader.js
 variable app is in global scope - i.e. a property of window.
-app is our single global object literal - all other functions and properties of 
+app is our single global object literal - all other functions and properties of
 the bubbles game will be properties of app.
 */
 "use strict";
@@ -12,13 +12,13 @@ var app = app || {};
 
 // CONSTANTS
 app.KEYBOARD = {
-	"KEY_LEFT": 37, 
-	"KEY_UP": 38, 
-	"KEY_RIGHT": 39, 
+	"KEY_LEFT": 37,
+	"KEY_UP": 38,
+	"KEY_RIGHT": 39,
 	"KEY_DOWN": 40,
 	"KEY_SPACE": 32,
 	"KEY_ENTER": 13,
-	
+
 };
 
 app.IMAGES = {
@@ -45,7 +45,7 @@ app.keydown = [];
 
 // the Modernizr object is from the modernizr.custom.js file
 Modernizr.load(
-	{ 
+	{
 		// load all of these files
 		load : [
 			'js/polyfills.js',
@@ -57,14 +57,14 @@ Modernizr.load(
 			'js/LevelSelect.js',
 			'js/emitter.js',
 			'js/utilities.js',
-			
+
 			'js/spikes.js',
 			'js/bomb.js',
 			'js/complete.js',
 			'js/cannon.js',
 			'js/bullet.js',
-			
-			
+
+
 			app.IMAGES['bs'],
 			app.IMAGES['mainBG'],
 			app.IMAGES['lsBG'],
@@ -75,10 +75,10 @@ Modernizr.load(
 			app.IMAGES['en'],
 			app.IMAGES['cannon'],
 		],
-		
+
 		// when the loading is complete, this function will be called
 		complete: function(){
-			
+
 			// set up event handlers
 			window.onblur = function(){
 				app.paused = true;
@@ -87,9 +87,9 @@ Modernizr.load(
 				// call update() so that our paused screen gets drawn
 				app.main.update();
 				createjs.Sound.stop();
-				
+
 			};
-			
+
 			window.onfocus = function(){
 				app.paused = false;
 				cancelAnimationFrame(app.animationID);
@@ -97,31 +97,31 @@ Modernizr.load(
 				app.main.update();
 				app.main.startSoundtrack();
 			};
-			
+
 			// event listeners
 			window.addEventListener("keydown",function(e){
 				//console.log("keydown=" + e.keyCode);
 				app.keydown[e.keyCode] = true;
 			});
-				
+
 			window.addEventListener("keyup",function(e){
 				//console.log("keyup=" + e.keyCode);
 				app.keydown[e.keyCode] = false;
 			});
-			
+
 			createjs.Sound.alternateExtensions = ["mp3"];
 			createjs.Sound.registerSound({id:"dash", src: "sounds/swoosh.ogg"});
 			createjs.Sound.registerSound({id:"soundtrack", src: "sounds/mixdown.ogg"});
-			
+
 			createjs.Sound.addEventListener("fileload", handleFileLoad);
-			
+
 			function handleFileLoad(e){
 				if(e.src == "sounds/mixdown.ogg")app.main.startSoundtrack();
-			
+
 			}
 			// start game
 			app.main.init();
 		} // end complete
-		
+
 	} // end object
 ); // end Modernizr.load
